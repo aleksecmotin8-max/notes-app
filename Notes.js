@@ -16,6 +16,16 @@ const createNote =(text,head)=>{
     }
     state.notes.push(newNote);
 };
+const saveNote =()=>{
+    localStorage.setItem('state',JSON.stringify(state))
+};
+const loadNote =()=>{
+   let saveState = localStorage.getItem('state');
+ if (saveState!==null){
+   let trueState = JSON.parse(saveState);
+    state = trueState;
+ }
+}
 const deleteContextMenu = ()=>{
       const element = document.querySelector('#context-menu');
       if(element!==null){
@@ -237,6 +247,7 @@ const renderNotesField = ()=>{
     buttonSearch.addEventListener('click',funkButtonSearch)
 }
 const renderStatePage = () =>{
+    saveNote()
         app.replaceChildren();
     if (state.statePage === 'field'){
         renderNotesField()
@@ -252,5 +263,5 @@ document.addEventListener('contextmenu',(event)=>{
    event.preventDefault();
    deleteContextMenu();
    })
-   
+   loadNote()
 renderStatePage()   

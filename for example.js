@@ -4,7 +4,7 @@ let currentFilter = 'all';
 
 const all = document.createElement('div');
 const initialDiv = document.createElement('div');
-const changetDiv = document.createElement('div');
+c   onst changetDiv = document.createElement('div');
 
 const input = document.createElement('input');
 const buttonAdd = document.createElement('button');
