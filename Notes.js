@@ -48,6 +48,7 @@ const funkFieldMiniDiv =(arr,container)=>{
         
      });
       
+     app.appendChild(container);
 
 }
 const funkButtonSearch =()=>{
@@ -128,6 +129,13 @@ const renderSearchScreen = ()=>{
 
     buttonCancel.textContent = 'cancel';
 
+     buttonCancel.addEventListener('click',()=>{
+
+        state.statePage = 'field';
+        renderStatePage();
+        
+    })
+
     searchDiv.appendChild(searchInput);
     searchDiv.appendChild(searchDivForMiniDiv);
     searchDiv.appendChild(buttonCancel);
@@ -143,13 +151,13 @@ const renderSearchScreen = ()=>{
         return item.text.toLowerCase().includes(query)
     });
    
-     searchDiv.appendChild(searchDivForMiniDiv);
+
    funkFieldMiniDiv(filteredNotes,searchDivForMiniDiv);
  
   
     })
    
-    
+ 
 
 }
    
