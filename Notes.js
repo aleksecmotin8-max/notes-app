@@ -1,9 +1,8 @@
 let state ={
     notes:[],
     statePage : 'field',
-   currentNoteId : null
+   currentNoteId : null,
 };
-
 const app = document.querySelector('#app');
 const createNote =(text,head)=>{
     let newNote = 
@@ -40,6 +39,8 @@ const funkFieldMiniDiv =(arr,container)=>{
         heading.textContent = item.head.slice(0,100);
         pText.textContent = item.text.slice(0,20);
        
+        miniDiv.classList.add('note');
+
         miniDiv.appendChild(heading);
         miniDiv.appendChild(pText)
        container.appendChild(miniDiv);
@@ -58,7 +59,6 @@ const funkFieldMiniDiv =(arr,container)=>{
         
      });
       
-     app.appendChild(container);
 
 }
 const funkButtonSearch =()=>{
@@ -119,6 +119,7 @@ const showContextMenu =(event)=>{
    divContextMenu.addEventListener('click',(event)=>{
     event.stopPropagation();
    })
+   document.addEventListener('click',deleteContextMenu );
   
    
 
@@ -222,25 +223,48 @@ const renderAddNotes = () => {
     if (input !== ''){
         createNote(input,headingInput.value)
     renderStatePage()
+    }else if (input === ''){
+        renderStatePage()
     }
    });
 } 
     
 const renderNotesField = ()=>{
     let mainFieldDiv = document.createElement('div');
-    let divForMiniDiv = document.createElement('div')
-
+    let divForMiniDiv = document.createElement('div');
+    let divHeading = document.createElement('div');
+    let divNotesContent = document.createElement('div');
+    
+    let heading = document.createElement('h1');
     let buttonPlus = document.createElement('button');
     let buttonSearch = document.createElement('button');
+    let counter = document.createElement('p');
 
-    buttonSearch.textContent = ' search '
+    counter.textContent = `Notes count: ` + state.notes.length;
+    buttonSearch.textContent = ' 🔍 ';
     buttonPlus.textContent = ' + ';
-    
-    mainFieldDiv.appendChild(buttonSearch);
-    mainFieldDiv.appendChild(buttonPlus);
-    mainFieldDiv.appendChild(divForMiniDiv)
-    app.appendChild(mainFieldDiv);
+    heading.textContent = 'Notes';
 
+    
+    mainFieldDiv.classList.add('notes-page');
+    divNotesContent.classList.add('notes-content');
+    buttonPlus.classList.add('button-plus');
+    buttonSearch.classList.add('button-search');
+    divForMiniDiv.classList.add('notes-list');
+    divHeading.classList.add('heading-div');
+    heading.classList.add('heading');
+
+    
+    divNotesContent.appendChild(divForMiniDiv);
+    divHeading.appendChild(heading);
+     divHeading.appendChild(counter);
+    divHeading.appendChild(buttonSearch);
+
+    mainFieldDiv.appendChild(divHeading);
+    mainFieldDiv.appendChild(divNotesContent);
+    mainFieldDiv.appendChild(buttonPlus);
+    app.appendChild(mainFieldDiv); 
+    
    funkFieldMiniDiv(state.notes,divForMiniDiv);
 
     buttonPlus.addEventListener('click',funkButtonPlus);
